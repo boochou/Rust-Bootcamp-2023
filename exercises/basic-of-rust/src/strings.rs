@@ -33,10 +33,10 @@ fn reverse_string(input: &str) -> String {
 // Exercise 5
 // Check if a string is a palindrome
 fn is_palindrome(word: &str) -> bool {
-    let str: String = word.to_lowercase().chars().rev().collect();
+    let str: String = word.chars().rev().collect();
    
     println!("input: {} rev: {}",word,str);
-    str ==word.to_lowercase().to_string()
+    str ==word.to_string()
 }
 
 // Exercise 6
@@ -44,9 +44,6 @@ fn is_palindrome(word: &str) -> bool {
 fn count_char_occurrences(string: &str, ch: char) -> usize {
     let mut count: usize=0;
     for c in string.chars() {
-        if c==' ' {
-            count=0;
-        }
         if c==ch {
             count+=1;
         }
@@ -90,7 +87,7 @@ mod tests {
     fn test_palindrome() {
         assert_eq!(is_palindrome("level"), true);
         assert_eq!(is_palindrome("deed"), true);
-        assert_eq!(is_palindrome("Rotor"), true);
+        assert_eq!(is_palindrome("Rotor"), false);
     }
     // Test for exercise 5
     #[test]
@@ -104,7 +101,7 @@ mod tests {
     #[test]
     fn test_count_char_occurrences() {
         assert_eq!(count_char_occurrences("Hello", 'l'), 2);
-        assert_eq!(count_char_occurrences("Rust is fun", 'u'), 1);
+        assert_eq!(count_char_occurrences("Rust is fun", 'u'), 2);
         assert_eq!(count_char_occurrences("Mississippi", 's'), 4);
     }
 
