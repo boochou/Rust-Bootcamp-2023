@@ -33,10 +33,10 @@ fn reverse_string(input: &str) -> String {
 // Exercise 5
 // Check if a string is a palindrome
 fn is_palindrome(word: &str) -> bool {
-    let str: String = word.chars().rev().collect();
+    let str: String = word.to_lowercase().chars().rev().collect();
    
     println!("input: {} rev: {}",word,str);
-    str ==word.to_string()
+    str ==word.to_lowercase().to_string()
 }
 
 // Exercise 6
@@ -87,7 +87,7 @@ mod tests {
     fn test_palindrome() {
         assert_eq!(is_palindrome("level"), true);
         assert_eq!(is_palindrome("deed"), true);
-        assert_eq!(is_palindrome("Rotor"), false);
+        assert_eq!(is_palindrome("Rotor"), true);
     }
     // Test for exercise 5
     #[test]
