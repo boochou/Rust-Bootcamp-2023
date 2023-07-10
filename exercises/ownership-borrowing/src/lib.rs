@@ -127,6 +127,6 @@ fn exercise8() {
         }
 
         let person = add_vec[0].to_string();
-        accounting.push(person);
+        accounting.push(person); 
     }
 }
