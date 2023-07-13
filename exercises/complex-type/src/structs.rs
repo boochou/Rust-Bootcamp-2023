@@ -2,6 +2,7 @@
 // Fix the error
 // Make it compile
 // Run test
+#[derive(Debug)]
 struct Person {
     name: String,
     age: u8,
@@ -18,7 +19,19 @@ fn exercise1() -> Person {
 
     p
 }
-
+impl PartialEq for Person {
+    fn eq(&self, other: &Self) -> bool {
+        if self.name!=other.name {
+            false
+        } else if self.age!=other.age {
+            false
+        } else if self.hobby!= other.hobby {
+            false
+        } else {
+            true
+        }
+    }
+}
 // Exercise 2
 // Fix the error
 // Make it compile
@@ -39,12 +52,12 @@ impl Agent {
 
     // Get the name of the person
     fn get_name(&self) -> &str {
-        todo!()
+        &self.name
     }
 
     // Get the age of the person
     fn get_age(&self) -> u32 {
-        todo!()
+        self.age
     }
 }
 
@@ -61,31 +74,36 @@ impl Calculator {
         Calculator { value: 0 }
     }
 
-    fn add(&self, num: i32) {
+    fn add(& mut self, num: i32) {
         self.value += num;
     }
 
-    fn subtract(mut self, num: i32) {
+    fn subtract(&mut self, num: i32) {
         self.value -= num;
     }
-    fn clear(self) {
+    fn clear(&mut self) {
         self.value = 0;
     }
 
-    fn get_value(self) -> i32 {
+    fn get_value(&self) -> i32 {
         self.value
     }
 }
 
 // Exercise 4
 // Make it compile
-#[derive(Debug)]
+use std::fmt;
+#[derive(Debug,Clone)]
 struct User {
     first: String,
     last: String,
     age: u32,
 }
-
+impl fmt::Display for User {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{} {}, age {}", self.first, self.last, self.age)
+    }
+}
 fn exercise4() {
     let u1 = User {
         first: String::from("John"),
@@ -95,7 +113,7 @@ fn exercise4() {
 
     let u2 = User {
         first: String::from("Mary"),
-        ..u1
+        ..u1.clone()
         
     };
 
@@ -122,10 +140,10 @@ fn exercise5() {
     });
 
     
-    let moved = foos[0];
+    let moved = &foos[0];
 
     
-    let moved_field = foos[0].str_val;
+    let moved_field = foos[0].str_val.clone();
 }
 
 // Exercise 6
@@ -153,12 +171,16 @@ impl Package {
         }
     }
 
-    fn is_international(&self) -> ??? {
-        // Something goes here...
+    fn is_international(&self) -> bool {
+        if self.sender_country==self.recipient_country {
+            false
+        } else {
+            true
+        }
     }
 
-    fn get_fees(&self, cents_per_gram: i32) -> ??? {
-        // Something goes here...
+    fn get_fees(&self, cents_per_gram: i32) -> i32 {
+        self.weight_in_grams*cents_per_gram
     }
 }
 
