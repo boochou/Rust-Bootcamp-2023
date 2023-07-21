@@ -17,7 +17,10 @@ fn generate_nametag_text(name: String) -> Result<String, String> {
 use std::num::ParseIntError;
 
 fn parse_number(s: &str) -> Result<i32, ParseIntError> {
-    s.parse::<i32>()
+    match s.parse::<i32>() {
+        Ok(int)=> Ok(int) ,
+        Err(e)=> return Err(e)
+    }
 }
 
 // Exercise 3
@@ -70,7 +73,10 @@ mod tests {
     #[test]
     fn exercise2_should_work() {
         assert_eq!(parse_number("42"), Ok(42));
-        assert!(parse_number("invalid").is_err()); //had modified by Ho Dinh Dung
+        assert_eq!(
+            parse_number("invalid").map_err(|e| e.to_string()),
+            Err("invalid digit found in string".parse().unwrap())
+        )
     }
 
     /// Test for exercise 3
