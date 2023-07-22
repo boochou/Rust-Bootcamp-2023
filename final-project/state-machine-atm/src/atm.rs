@@ -109,19 +109,18 @@ impl StateMachine for Atm {
             Action::PressKey(k)=> {
                match k {
                     Key::Enter => {
-                        
-                        let mut amount: u64 =0;
-                        for value in starting_state.keystroke_register.iter() {
-                            match value {
-                                Key::One => amount=amount*10+1,
-                                Key::Two => amount=amount*10+2,
-                                Key::Three => amount=amount*10+3,
-                                Key::Four => amount=amount*10+4,
-                                _=> amount+=0
-                            }
-                        }
                         match starting_state.expected_pin_hash {
                             Auth::Authenticated => {
+                                let mut amount: u64 =0;
+                                for value in starting_state.keystroke_register.iter() {
+                                    match value {
+                                        Key::One => amount=amount*10+1,
+                                        Key::Two => amount=amount*10+2,
+                                        Key::Three => amount=amount*10+3,
+                                        Key::Four => amount=amount*10+4,
+                                        _=> amount+=0
+                                    }
+                                }
                                 a.expected_pin_hash=Auth::Waiting;
                                 if amount < starting_state.cash_inside {                                    
                                     a.cash_inside-=amount;                                   
